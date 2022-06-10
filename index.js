@@ -62,21 +62,27 @@ function MiFlowerCarePlugin(log, config) {
                 temp: data.temperature,
                 humidity: data.moisture
             });
-
-            that.lightService.getCharacteristic(Characteristic.CurrentAmbientLightLevel)
-                .updateValue(data.lux);
-            that.lightService.getCharacteristic(Characteristic.StatusActive)
-                .updateValue(true);
-
-            that.tempService.getCharacteristic(Characteristic.CurrentTemperature)
-                .updateValue(data.temperature);
-            that.tempService.getCharacteristic(Characteristic.StatusActive)
-                .updateValue(true);
-
-            that.humidityService.getCharacteristic(Characteristic.CurrentRelativeHumidity)
-                .updateValue(data.moisture);
-            that.humidityService.getCharacteristic(Characteristic.StatusActive)
-                .updateValue(true);
+            
+            if (data.lux) {
+                that.lightService.getCharacteristic(Characteristic.CurrentAmbientLightLevel)
+                    .updateValue(data.lux);
+                that.lightService.getCharacteristic(Characteristic.StatusActive)
+                    .updateValue(true);
+            }
+            
+            if (data.temperature) {
+                that.tempService.getCharacteristic(Characteristic.CurrentTemperature)
+                    .updateValue(data.temperature);
+                that.tempService.getCharacteristic(Characteristic.StatusActive)
+                    .updateValue(true);
+            }
+            
+            if (data.moisture) {
+                that.humidityService.getCharacteristic(Characteristic.CurrentRelativeHumidity)
+                    .updateValue(data.moisture);
+                that.humidityService.getCharacteristic(Characteristic.StatusActive)
+                    .updateValue(true);
+            }
 
             if (that.humidityAlert) {
                 that.humidityAlertService.getCharacteristic(Characteristic.ContactSensorState)
